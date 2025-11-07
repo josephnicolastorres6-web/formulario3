@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Usuario</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    h1 {
+      background-color: #ffffff;
+      color: #2f3e46;
+      text-align: center;
+      width: 100%;
+      margin: 0;
+      padding: 15px 0;
+      font-size: 22px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    form {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+      width: 340px;
+      margin-top: 20px;
+    }
+
+    form h2 {
+      text-align: center;
+      color: #374151;
+      margin-bottom: 20px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    label {
+      font-weight: 500;
+      display: block;
+      margin-bottom: 5px;
+      color: #4b5563;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 9px;
+      margin-bottom: 15px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 14px;
+      background-color: #f9fafb;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #93c5fd;
+      background-color: #fff;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .contador {
+      text-align: right;
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .checkbox-container label {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .botones {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+    }
+
+    button[type="reset"] {
+      background-color: #60a5fa;
+    }
+
+    button[type="reset"]:hover {
+      background-color: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Bienvenido al Registro de Usuario</h1>
+
+  <form id="registroForm">
+    <h2>Formulario de Registro</h2>
+
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required />
+
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="apellido" required />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad" min="1" max="120" required />
+
+    <label for="fecha">Fecha de nacimiento:</label>
+    <input type="date" id="fecha" name="fecha" required />
+
+    <label for="genero">Género:</label>
+    <select id="genero" name="genero" required>
+      <option value="">Seleccionar...</option>
+      <option value="masculino">Masculino</option>
+      <option value="femenino">Femenino</option>
+      <option value="otro">Otro</option>
+    </select>
+
+    <label for="pais">País:</label>
+    <select id="pais" name="pais" required>
+      <option value="">Seleccionar...</option>
+      <option value="Colombia">Colombia</option>
+      <option value="México">México</option>
+      <option value="Argentina">Argentina</option>
+      <option value="España">España</option>
+    </select>
+
+    <label for="descripcion">Descripción personal:</label>
+    <textarea id="descripcion" name="descripcion" rows="3" maxlength="150" placeholder="Escribe algo sobre ti..."></textarea>
+    <div class="contador" id="contador">0/150 caracteres</div>
+
+    <div class="checkbox-container">
+      <input type="checkbox" id="terminos" required />
+      <label for="terminos">Acepto los términos y condiciones</label>
+    </div>
+
+    <div class="botones">
+      <button type="submit">Enviar</button>
+      <button type="reset">Borrar</button>
+    </div>
+  </form>
+
+  <script>
+    const form = document.getElementById('registroForm');
+    const descripcion = document.getElementById('descripcion');
+    const contador = document.getElementById('contador');
+
+    
+    descripcion.addEventListener('input', () => {
+      contador.textContent = `${descripcion.value.length}/150 caracteres`;
+    });
+
+    
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!document.getElementById('terminos').checked) {
+        alert('⚠️ Debes aceptar los términos y condiciones antes de enviar.');
+        return;
+      }
+
+      const nombre = document.getElementById('nombre').value;
+      const apellido = document.getElementById('apellido').value;
+      const email = document.getElementById('email').value;
+
+      alert(`✅ Registro exitoso\n\nNombre: ${nombre} ${apellido}\nEmail: ${email}`);
+      form.reset();
+      contador.textContent = "0/150 caracteres";
+    });
+  </script>
+
+</body>
+</html>
